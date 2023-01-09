@@ -1,0 +1,18 @@
+local Player = game:GetService("Players").LocalPlayer
+repeat wait() until Player.Character
+local function Main()
+	local Humanoid = Player.Character:WaitForChild("Humanoid")
+	local ripfunction = false
+	Humanoid.Died:Connect(function()
+		local DeathLocation = Player.Character:WaitForChild("HumanoidRootPart").CFrame
+		workspace.ChildAdded:Connect(function(Object)
+			if not ripfunction and Object.Name == Player.Name then
+				wait()
+				Player.Character:WaitForChild("HumanoidRootPart").CFrame = DeathLocation
+				ripfunction = true
+				Main()
+			end
+		end)
+	end)
+end
+Main()
